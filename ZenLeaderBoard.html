@@ -1,0 +1,17 @@
+<head>
+  <title>ZenLeaderBoard</title>
+</head>
+
+<body>
+  <h1>ZenBanx Live Transactions</h1>
+
+  {{> zenleaderboard}}
+</body>
+
+<template name="zenleaderboard">
+	<o1>
+	{{#each transaction}}
+		<li>{{baseCurrency}}  {{SettleDate}}</li>
+	{{/each}}
+	</o1>
+</template>

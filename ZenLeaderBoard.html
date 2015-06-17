@@ -3,21 +3,50 @@
 </head>
 
 <body>
-	<h1>ZenBanx Live Transactions</h1>
-	<h2>Account ID base Currency Currency Amount Time Stamp</h2>
+	<h1>ZenBanx Transactions</h1>
+	
+  	{{>searchForm}}
+  	
+<!--   	<input type="submit" value= "Sort"/> -->
+	<select id="criteria">
+	  <option value="Account ID">Account ID</option>
+	  <option value="Base Currency">Base Currency</option>
+	  <option value="Currency">Currency</option>
+	  <option value="Amount">Amount</option>
+	  <option value="Time Stamp">Time Stamp</option>
+	</select>
+
 	{{> zenleaderboard}}
+
 </body>
 
+<template name ="searchForm">
+		<form class="new-task">
+	    	<input type="text" name="transaction" placeholder="Search" />
+	    	<input type="submit" value= "Go"/>
+	  	</form>
+</template>
+
 <template name="zenleaderboard">
-	<o1>
+	<table style="width:100%">
+		
+		<tr>
+			<th>Account ID</th> 
+			<th>Base Currency</th> 
+			<th>Currency</th> 
+			<th>Amount</th> 
+			<th>Time Stamp</th>
+		</tr>
+		
 		{{#each transaction}}
-		<li>
-			{{#each items}}{{acctId}}{{/each}} 
-			<b>{{baseCurrency}}</b>
-			{{#each items}}{{currency}}{{/each}}
-			{{#each items}}{{amount}}{{/each}}  
-			{{timeStamp}} 
-		</li>
+		<tr>
+			<td>{{#each items}}{{acctId}}{{/each}}</td> 
+			<td>{{baseCurrency}}</td>
+			<td>{{#each items}}{{currency}}{{/each}}</td>
+			<td>{{#each items}}{{amount}}{{/each}}</td>  
+			<td>{{timeStamp}}</td> 
+		</tr>
 		{{/each}}
-	</o1>
+	
+	</table>
 </template>

@@ -5,10 +5,27 @@ if (Meteor.isClient) {
     transaction: function(){
       return Transactions.find();
     },
-    acctIds: function(){
-      return Transactions.find({}, {items:1});
+    search: function(text, detail){
+      // Search Algorithm
+    },
+    sort: function(detail){
+      // Sort Algorithm 
+    },
+    counter: function(){
+      return Transactions.count({})
+    } 
+  });
+  
+  Template.searchForm.events({
+    'submit form':function(event)
+    {
+      event.preventDefault();
+      var transactionVar = event.target.transaction.value;
+      console.log(transactionVar);
+      console.log(document.getElementById("criteria").value);
     }
   });
+
 }
 
 if (Meteor.isServer) {

@@ -1,17 +1,23 @@
 <head>
-  <title>ZenLeaderBoard</title>
+	<title>ZenLeaderBoard</title>
 </head>
 
 <body>
-  <h1>ZenBanx Live Transactions</h1>
-
-  {{> zenleaderboard}}
+	<h1>ZenBanx Live Transactions</h1>
+	<h2>Account ID base Currency Currency Amount Time Stamp</h2>
+	{{> zenleaderboard}}
 </body>
 
 <template name="zenleaderboard">
 	<o1>
-	{{#each transaction}}
-		<li>{{baseCurrency}}  {{SettleDate}}</li>
-	{{/each}}
+		{{#each transaction}}
+		<li>
+			{{#each items}}{{acctId}}{{/each}} 
+			<b>{{baseCurrency}}</b>
+			{{#each items}}{{currency}}{{/each}}
+			{{#each items}}{{amount}}{{/each}}  
+			{{timeStamp}} 
+		</li>
+		{{/each}}
 	</o1>
 </template>

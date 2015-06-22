@@ -43,6 +43,8 @@
 
 	<p> Criteria: {{criteria}}</p>
 
+	<div>
+		<p>Live Transactions</p>
 	<table align="center" id="Sorted Table" style="width:80%">
 
 		<tr>
@@ -54,15 +56,15 @@
 		</tr>
 
 		{{#each sortedTable}}
-		<tr>
-			<td>{{#each items}}{{acctId}}{{/each}}</td> 
+		<tr >
+			<td>{{#each items}}{{acctId}}{{else}}Unknown{{/each}}</td> 
 			<td>{{baseCurrency}}</td>
-			<td>{{#each items}}{{currency}}{{/each}}</td>
-			<td>{{#each items}}{{amount}}{{/each}}</td>  
+			<td>{{#each items}}{{currency}}{{else}}Unknown{{/each}}</td>
+			<td>{{#each items}}{{amount}}{{else}}Unknown{{/each}}</td>  
 			<td>{{timeStamp}}</td> 
 		</tr>
 		{{/each}}
 
 	</table>
-
+</div>
 </template> 

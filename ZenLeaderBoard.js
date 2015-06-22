@@ -10,12 +10,12 @@ if (Meteor.isClient) {
   Session.setDefault("cursor", "items.acctId");
 
   Template.sortBoard.helpers({
+
     sortedTable: function()
     {
       var sortBy = Session.get("cursor");
       console.log(sortBy);
       return Transactions.find({}, {sort:{sortBy:1}}); 
-
     },
     criteria: function()
     {
@@ -23,6 +23,10 @@ if (Meteor.isClient) {
     },
     counter: function(){
       return Transactions.find().count();
+    },
+    isBlank: function(entry){
+      console.log(entry);
+      return entry === ''; 
     },
     distribution: function(){
       var percentages = [];
@@ -40,6 +44,7 @@ if (Meteor.isClient) {
     'click':function(event){
       event.preventDefault();
       var elem = document.getElementById("Sorted Table");
+      
       var sortCriteria = document.getElementById("criteria").value; 
 
         //console.log(sortCriteria);
@@ -48,7 +53,6 @@ if (Meteor.isClient) {
         
         criteria = criteriaMap[sortCriteria];
         Session.set("cursor", criteria);
-
       }
     });
 

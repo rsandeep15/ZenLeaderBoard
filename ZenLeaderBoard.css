@@ -27,11 +27,14 @@ h1 {
   font-size: 3.0em;
   text-align: center;
   color: #FFFFFF
-
-
 }
 div {
-  font-size: 1.3em;
+  font-size: 1.4em;
+  color:#FFFFFF;
+  text-align: left;
+}
+p {
+  font-size: 1.4em;
   color:#FFFFFF;
   text-align: left;
 }

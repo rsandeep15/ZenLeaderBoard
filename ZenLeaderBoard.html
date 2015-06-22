@@ -3,33 +3,48 @@
 </head>
 
 <body>
+	
 	<h1>ZenBanx Transactions</h1>
 	
-  	{{>searchForm}}
-  	
-<!--   	<input type="submit" value= "Sort"/> -->
-	<select id="criteria">
-	  <option value="Account ID">Account ID</option>
-	  <option value="Base Currency">Base Currency</option>
-	  <option value="Currency">Currency</option>
-	  <option value="Amount">Amount</option>
-	  <option value="Time Stamp">Time Stamp</option>
-	</select>
-
-	{{> zenleaderboard}}
+	{{> sortBoard}}
 
 </body>
 
-<template name ="searchForm">
-		<form class="new-task">
-	    	<input type="text" name="transaction" placeholder="Search" />
-	    	<input type="submit" value= "Go"/>
-	  	</form>
-</template>
+<template name = "sortBoard">
+	
+	<input type="submit" value= "Sort"/>
 
-<template name="zenleaderboard">
-	<table style="width:100%">
-		
+	<select id="criteria">
+		<option value="Account ID">Account ID</option>
+		<option value="Base Currency">Base Currency</option>
+		<option value="Currency">Currency</option>
+		<option value="Amount">Amount</option>
+		<option value="Time Stamp">Time Stamp</option>
+	</select>
+
+
+	<div>
+		<h3>Vital Statistics</h3>
+		<p>Number of Transactions: {{counter}}</p>
+		<table align = "center" style="width:50%">
+			<tr>
+				<th>Currency</th>
+				<th>Percentage Used</th>
+			</tr>
+
+			{{#each distribution}}
+			<tr>
+				<td>{{currency}}</td>
+				<td>{{percentage}}</td>
+			</tr>
+			{{/each}}
+		</table>
+	</div>	
+
+	<p> Criteria: {{criteria}}</p>
+
+	<table align="center" id="Sorted Table" style="width:80%">
+
 		<tr>
 			<th>Account ID</th> 
 			<th>Base Currency</th> 
@@ -37,8 +52,8 @@
 			<th>Amount</th> 
 			<th>Time Stamp</th>
 		</tr>
-		
-		{{#each transaction}}
+
+		{{#each sortedTable}}
 		<tr>
 			<td>{{#each items}}{{acctId}}{{/each}}</td> 
 			<td>{{baseCurrency}}</td>
@@ -47,6 +62,7 @@
 			<td>{{timeStamp}}</td> 
 		</tr>
 		{{/each}}
-	
+
 	</table>
-</template>
+
+</template> 

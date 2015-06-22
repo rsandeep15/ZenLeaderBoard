@@ -20,6 +20,7 @@ header {
   padding: 20px 15px 15px 15px;
   position: relative;
 
+
 }
 
 h1 {
@@ -29,9 +30,14 @@ h1 {
 
 
 }
+div {
+  font-size: 1.3em;
+  color:#FFFFFF;
+  text-align: left;
+}
 table, th, td{
   border: 1px ridge #660066;
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: #FFFFFF;
 }
 table, th

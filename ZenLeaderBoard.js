@@ -1,30 +1,56 @@
 Transactions = new Mongo.Collection("Transactions");
 
+var currencies = ["CAD", "USD", "HKD", "SGD" , "AUD", "GBP", "EUR", "YEN", "RUP"];
+var currencyMap = {"CAD": "Canadian Dollars", "USD":"US Dollars", "HKD":"Hong Kong Dollars", "SGD":"Singapore Dollars" 
+, "AUD":"Australian Dollars", "GBP":"British Pounds", "EUR": "Euros", "YEN":"Japanese Yen", "RUP":"Indian Rupees"};
+
+var criteria = 'items.acctId'; 
+
 if (Meteor.isClient) {
-  Template.zenleaderboard.helpers({
-    transaction: function(){
-      return Transactions.find();
+  Session.setDefault("cursor", "items.acctId");
+
+  Template.sortBoard.helpers({
+    sortedTable: function()
+    {
+      var sortBy = Session.get("cursor");
+      console.log(sortBy);
+      return Transactions.find({}, {sort:{sortBy:1}}); 
+
     },
-    search: function(text, detail){
-      // Search Algorithm
-    },
-    sort: function(detail){
-      // Sort Algorithm 
+    criteria: function()
+    {
+      return Session.get("cursor"); 
     },
     counter: function(){
-      return Transactions.count({})
-    } 
-  });
-  
-  Template.searchForm.events({
-    'submit form':function(event)
-    {
-      event.preventDefault();
-      var transactionVar = event.target.transaction.value;
-      console.log(transactionVar);
-      console.log(document.getElementById("criteria").value);
+      return Transactions.find().count();
+    },
+    distribution: function(){
+      var percentages = [];
+      for (var i =0; i < currencies.length; i++)
+      {
+        var currency = currencies[i];
+        var totalTransactions = Transactions.find().count();
+        var percentage = ((Transactions.find({"items.currency":currency}).count()/totalTransactions)* 100 ).toFixed(1) + "%";
+        percentages.push({'currency':currencyMap[currency], 'percentage': percentage});
+      }
+      return percentages; 
     }
   });
+  Template.sortBoard.events({
+    'click':function(event){
+      event.preventDefault();
+      var elem = document.getElementById("Sorted Table");
+      var sortCriteria = document.getElementById("criteria").value; 
+
+        //console.log(sortCriteria);
+        var criteriaMap = {"Account ID":"items.acctId", "Base Currency":"baseCurrency", 
+        "Currency":"items.currency", "Amount":"items.amount", "Time Stamp":"timeStamp"}; 
+        
+        criteria = criteriaMap[sortCriteria];
+        Session.set("cursor", criteria);
+
+      }
+    });
 
 }
 

@@ -73,9 +73,22 @@ if (Meteor.isClient) {
       },
       'click .hit':function (event)
       {
-        alert("Form Submitted");
         var form = document.forms["transaction"];
-        console.log(form["Account ID"]);  
+        var accountID = form["Account ID"].value;
+        var baseCurrency = form["Base Currency"].value;
+        var currency = form["Currency"].value; 
+        var amount = form["Amount"].value; 
+        var date = form["Date"].value;
+        var time = form["Time"].value; 
+        var finalTransaction = "Account ID: " + accountID + " Base Currency: " + baseCurrency + " Currency: " + currency + " Amount: " + amount + " Date: " + date + " Time: " + time;  
+        alert("Confirm Add: \n" + finalTransaction + " ?"); 
+        var transInfo = [];
+
+        // Adds a transaction with the user specified information from the form to Mongo Collection
+        
+
+        //Transactions.insert({"items": [{"acctId":accountID, "amount":amount, "currency": currency}], baseCurrency: baseCurrency});
+        
         return false;  
       }
     });

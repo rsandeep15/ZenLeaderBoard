@@ -5,13 +5,30 @@
 <body>
 	
 	<h1>ZenBanx Transactions</h1>
+	<a href = "http://www.zenbanx.com"><img src = "https://pbs.twimg.com/profile_images/598226607082352640/pJ2A1tF9.jpg"></a>           
 	
+
+
+
 	{{> sortBoard}}
 
 </body>
 
 <template name = "sortBoard">
-	
+	<div>
+		<p>Insert New Transaction:</p>
+		<form name= "transaction" class= "new-transaction">
+			<input type= "text" name= "Account ID" placeholder="Account ID"/>
+			<input type= "text" name= "Base Currency" placeholder="Base Currency"/>
+			<input type= "text" name= "Currency" placeholder="Currency"/>
+			<input type= "text" name= "Amount" placeholder="Amount"/>
+			<input type= "date" name= "Time Stamp Date" placeholder="Date"/>
+			<input type= "time" name= "Time Stamp Time" placeholder="Time"/>
+			<input type="submit" class= "hit" value= "Add Transaction"/>
+		</form>
+	</div>
+
+	<div>
 	<input type="submit" value= "Sort"/>
 
 	<select id="criteria">
@@ -22,10 +39,11 @@
 		<option value="Time Stamp">Time Stamp</option>
 	</select>
 
+	</div>
 
 	<div>
 		<h3>Vital Statistics</h3>
-		<p>Number of Transactions: {{counter}}</p>
+		<p>Number of Transactions: <b>{{counter}}</b></p>
 		<table align = "center" style="width:50%">
 			<tr>
 				<th>Currency</th>
@@ -39,12 +57,14 @@
 			</tr>
 			{{/each}}
 		</table>
+
 	</div>	
 
-	<p> Criteria: {{criteria}}</p>
+	<p> Sort Criteria: {{criteria}} </p>
+	<p>Live Transactions</p>
 
 	<div>
-		<p>Live Transactions</p>
+
 	<table align="center" id="Sorted Table" style="width:80%">
 
 		<tr>
@@ -60,8 +80,8 @@
 			<td>{{#each items}}{{acctId}}{{else}}Unknown{{/each}}</td> 
 			<td>{{baseCurrency}}</td>
 			<td>{{#each items}}{{currency}}{{else}}Unknown{{/each}}</td>
-			<td>{{#each items}}{{amount}}{{else}}Unknown{{/each}}</td>  
-			<td>{{timeStamp}}</td> 
+			<td>{{#each items}}{{fixAmount amount}}{{else}}Unknown{{/each}}</td>  
+			<td>{{formatDate timeStamp}}</td> 
 		</tr>
 		{{/each}}
 

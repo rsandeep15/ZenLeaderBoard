@@ -8,13 +8,11 @@ var criteria = 'items.acctId';
 
 if (Meteor.isClient) {
   Session.setDefault("cursor", "items.acctId");
-
   Template.sortBoard.helpers({
 
     sortedTable: function()
     {
       var sortBy = Session.get("cursor");
-      console.log(sortBy);
       return Transactions.find({}, {sort:{sortBy:1}}); 
     },
     criteria: function()
@@ -24,9 +22,28 @@ if (Meteor.isClient) {
     counter: function(){
       return Transactions.find().count();
     },
-    isBlank: function(entry){
-      console.log(entry);
-      return entry === ''; 
+
+    fixAmount: function(amount){
+      var amount = amount + ""; 
+      var index = amount.indexOf("#");
+      if (amount !== "Unknown" && index >= 0)
+      {
+        return amount.substring(0, index);
+      }
+      else
+      {
+        if (amount !== "Unknown")
+        {
+          return parseFloat(amount).toFixed(2); 
+        }
+        else
+        {
+          return amount; 
+        }
+      }
+    },
+    formatDate: function(date){
+      return moment(date).format('MMM Do, YYYY h:mm:ss a'); 
     },
     distribution: function(){
       var percentages = [];
@@ -38,7 +55,7 @@ if (Meteor.isClient) {
         percentages.push({'currency':currencyMap[currency], 'percentage': percentage});
       }
       return percentages; 
-    }
+    },
   });
   Template.sortBoard.events({
     'click':function(event){
@@ -53,6 +70,13 @@ if (Meteor.isClient) {
         
         criteria = criteriaMap[sortCriteria];
         Session.set("cursor", criteria);
+      },
+      'click .hit':function (event)
+      {
+        alert("Form Submitted");
+        var form = document.forms["transaction"];
+        console.log(form["Account ID"]);  
+        return false;  
       }
     });
 

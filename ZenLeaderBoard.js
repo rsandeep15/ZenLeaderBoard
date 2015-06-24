@@ -57,12 +57,12 @@ if (Meteor.isClient) {
       return percentages; 
     },
   });
-  Template.sortBoard.events({
-    'click':function(event){
-      event.preventDefault();
-      var elem = document.getElementById("Sorted Table");
-      
-      var sortCriteria = document.getElementById("criteria").value; 
+Template.sortBoard.events({
+  'click':function(event){
+    event.preventDefault();
+    var elem = document.getElementById("Sorted Table");
+
+    var sortCriteria = document.getElementById("criteria").value; 
 
         //console.log(sortCriteria);
         var criteriaMap = {"Account ID":"items.acctId", "Base Currency":"baseCurrency", 
@@ -79,15 +79,21 @@ if (Meteor.isClient) {
         var currency = form["Currency"].value; 
         var amount = form["Amount"].value; 
         var date = form["Date"].value;
-        var time = form["Time"].value; 
-        var finalTransaction = "Account ID: " + accountID + " Base Currency: " + baseCurrency + " Currency: " + currency + " Amount: " + amount + " Date: " + date + " Time: " + time;  
+        var time = form["Time"].value;
+        var jsDT = date + "T" + time; 
+        
+        var finalTransaction = "Account ID: " + accountID + " Base Currency: " 
+        + baseCurrency + " Currency: " + currency + " Amount: " + amount + " Date: " 
+        + date + " Time: " + time;  
+
         alert("Confirm Add: \n" + finalTransaction + " ?"); 
         var transInfo = [];
 
         // Adds a transaction with the user specified information from the form to Mongo Collection
         
-
-        //Transactions.insert({"items": [{"acctId":accountID, "amount":amount, "currency": currency}], baseCurrency: baseCurrency});
+        alert(jsDT); 
+        Transactions.insert({"items": [{"acctId":accountID, "amount":amount, "currency": currency}], 
+        baseCurrency: baseCurrency, timeStamp: jsDT });
         
         return false;  
       }

@@ -22,6 +22,7 @@ body {
   float:center;
   background-color: white; 
   background-image: linear-gradient(#1F5689, #6645DF 50%);
+  padding-top: 10px; 
   padding-bottom: 10px;
   padding-left: 10px;
   padding-right: 10px;

@@ -71,10 +71,27 @@ Template.sortBoard.events({
         criteria = criteriaMap[sortCriteria];
         Session.set("cursor", criteria);
       },
-      'click .hit':function (event)
+      "click .delete":function(){
+
+       var thisTrans = "Account ID: " + this["items.acctId"] + " Transaction Code: " + this["items.tranCode"] +  " Base Currency: " 
+        + this["baseCurrency"] + " Currency: " + this["items.currency"] + " Amount: " + this["items.amount"]
+        + " Time Stamp: " + this["timeStamp"];  
+       var deleted =  confirm("Are you sure you want to delete: " + thisTrans + " ? ");
+       if (deleted == true)
+       {
+          Transactions.remove(this._id); 
+       } 
+//        Transactions.find({"_id":"this._id"}); 
+
+      },
+      'click .hit':function ()
       {
+
+        // Retrive User Entered info from the form  
+
         var form = document.forms["transaction"];
         var accountID = form["Account ID"].value;
+        var transactionCode = form["Transaction Code"].value; 
         var baseCurrency = form["Base Currency"].value;
         var currency = form["Currency"].value; 
         var amount = form["Amount"].value; 
@@ -82,19 +99,31 @@ Template.sortBoard.events({
         var time = form["Time"].value;
         var jsDT = date + "T" + time; 
         
-        var finalTransaction = "Account ID: " + accountID + " Base Currency: " 
+        var finalTransaction = "Account ID: " + accountID + " Transaction Code: " + transactionCode +  " Base Currency: " 
         + baseCurrency + " Currency: " + currency + " Amount: " + amount + " Date: " 
         + date + " Time: " + time;  
 
-        alert("Confirm Add: \n" + finalTransaction + " ?"); 
-        var transInfo = [];
+        var ok = confirm("Confirm Add: \n" + finalTransaction); 
 
         // Adds a transaction with the user specified information from the form to Mongo Collection
-        
-        alert(jsDT); 
-        Transactions.insert({"items": [{"acctId":accountID, "amount":amount, "currency": currency}], 
-        baseCurrency: baseCurrency, timeStamp: jsDT });
-        
+        if(ok == true)
+        {
+          Transactions.insert({"items": [{"acctId":accountID, "amount":amount, "tranCode": transactionCode, "currency": currency}], 
+          baseCurrency: baseCurrency, timeStamp: jsDT });
+
+          // Clear Form
+
+          form["Account ID"].value=""; 
+          form["Transaction Code"].value=""; 
+          form["Base Currency"].value="";
+          form["Currency"].value=""; 
+          form["Amount"].value="";
+          form["Date"].value="";
+          form["Time"].value=""; 
+        }
+
+
+
         return false;  
       }
     });
@@ -104,6 +133,8 @@ Template.sortBoard.events({
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+    // import data only when Products collection is empty
+    //var fh = fopen (Assets.getText('simple.json'), 0);  
 
   });
 }

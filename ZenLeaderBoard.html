@@ -32,6 +32,7 @@
 		<p>Insert New Transaction:</p>
 		<form name= "transaction" class= "new-transaction">
 			<input type= "text" name= "Account ID" placeholder="Account ID"/>
+			<input type= "text" name= "Transaction Code" placeholder="Transaction Code" required/>
 			<input type= "text" name= "Base Currency" placeholder="Base Currency" required/>
 			<input type= "text" name= "Currency" placeholder="Currency"/>
 			<input type= "text" name= "Amount" placeholder="Amount"/>
@@ -79,10 +80,12 @@
 
 	<div>
 
-	<table align="center" id="Sorted Table" style="width:80%">
+	<table align="center" id="Sorted Table" style="width:95%">
 
 		<tr>
+			<th></th>
 			<th>Account ID</th> 
+			<th>Transaction Code</th>
 			<th>Base Currency</th> 
 			<th>Currency</th> 
 			<th>Amount</th> 
@@ -91,7 +94,9 @@
 
 		{{#each sortedTable}}
 		<tr >
+			<button class="delete">&times;</button>
 			<td>{{#each items}}{{acctId}}{{else}}Unknown{{/each}}</td> 
+			<td>{{#each items}}{{tranCode}}{{else}}Unknown{{/each}}</td> 
 			<td>{{baseCurrency}}</td>
 			<td>{{#each items}}{{currency}}{{else}}Unknown{{/each}}</td>
 			<td>{{#each items}}{{fixAmount amount}}{{else}}Unknown{{/each}}</td>  

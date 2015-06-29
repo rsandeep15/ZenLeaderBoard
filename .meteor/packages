@@ -5,7 +5,10 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 insecure
 blaze
 momentjs:moment
+msavin:jetsetter
+accounts-ui
+accounts-password
+accounts-facebook

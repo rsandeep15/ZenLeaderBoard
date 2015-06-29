@@ -9,7 +9,7 @@
 	
 
 
-
+	{{> loginButtons}}
 	{{> sortBoard}}
 
 </body>
@@ -22,19 +22,30 @@
 		var dateTime = moment(new Date()).format() + "";
 		var date = dateTime.substring(0, dateTime.indexOf("T"));
 		var time = dateTime.substring(dateTime.indexOf("T")+1, dateTime.indexOf("T") + 6); 
-		alert("Using the current date and time: " + dateTime);
+		//alert("Using the current date and time: " + dateTime);
 		document.getElementById('myDate').value = date;
 		document.getElementById('myTime').value = time;	
 	}
 	</script>
-	
+	{{#if currentUser}}
 	<div>
-		<p>Insert New Transaction:</p>
-		<form name= "transaction" class= "new-transaction">
+		<p>Insert New Transaction</p>
+		<form name= "transaction" class= "new-transaction" autocomplete= "off">
 			<input type= "text" name= "Account ID" placeholder="Account ID"/>
 			<input type= "text" name= "Transaction Code" placeholder="Transaction Code" required/>
-			<input type= "text" name= "Base Currency" placeholder="Base Currency" required/>
-			<input type= "text" name= "Currency" placeholder="Currency"/>
+			<input list="Currency" type= "id" name= "Base Currency" placeholder="Base Currency" maxlength="3"/>
+			<datalist id="Currency">
+				<option value="USD"></option> 
+				<option value="CAD"></option> 
+				<option value="EUR"></option> 
+				<option value="AUD"></option> 
+				<option value="YEN"></option> 
+				<option value="HKD"></option> 
+				<option value="SGD"></option> 
+				<option value="INR"></option> 
+				<option value="GBP"></option> 
+			</datalist>
+			<input list="Currency" type= "text" name= "Currency" placeholder="Currency" maxlength="3"/>
 			<input type= "text" name= "Amount" placeholder="Amount"/>
 			<input type= "date" id="myDate" name= "Date" placeholder="Date" required/>
 			<input type= "time" id="myTime" name= "Time" placeholder="Time" required/>
@@ -42,7 +53,7 @@
 			<input type="submit" class= "hit" value= "Add Transaction"/>
 		</form>
 	</div>
-
+	{{/if}}
 	<div>
 	<input type="submit" value= "Sort"/>
 
@@ -58,19 +69,26 @@
 
 	<div>
 		<h3>Vital Statistics</h3>
-		<p>Number of Transactions: <b>{{counter}}</b></p>
 		<table align = "center" style="width:50%">
 			<tr>
 				<th>Currency</th>
+				<th>Count</th> 
 				<th>Percentage Used</th>
 			</tr>
 
 			{{#each distribution}}
 			<tr>
 				<td>{{currency}}</td>
+				<td>{{count}}</td>
 				<td>{{percentage}}</td>
 			</tr>
 			{{/each}}
+
+			<tr>
+				<td><h4>Total</h4></td>
+				<td><h4>{{counter}}</h4></td>
+				<td><h4>100.0%</h4></td> 
+			</tr>
 		</table>
 
 	</div>	

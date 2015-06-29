@@ -1,13 +1,18 @@
 Transactions = new Mongo.Collection("Transactions");
 
-var currencies = ["CAD", "USD", "HKD", "SGD" , "AUD", "GBP", "EUR", "YEN", "RUP"];
+var currencies = ["CAD", "USD", "HKD", "SGD" , "AUD", "GBP", "EUR", "YEN", "INR"];
 var currencyMap = {"CAD": "Canadian Dollars", "USD":"US Dollars", "HKD":"Hong Kong Dollars", "SGD":"Singapore Dollars" 
-, "AUD":"Australian Dollars", "GBP":"British Pounds", "EUR": "Euros", "YEN":"Japanese Yen", "RUP":"Indian Rupees"};
+, "AUD":"Australian Dollars", "GBP":"British Pounds", "EUR": "Euros", "YEN":"Japanese Yen", "INR":"Indian Rupees"};
 
 var criteria = 'items.acctId'; 
 
 if (Meteor.isClient) {
-  Session.setDefault("cursor", "items.acctId");
+  Meteor.subscribe("Transactions");
+
+  Template.sortBoard.created = function()
+  {
+      Session.setDefault("cursor", "items.acctId");
+  }
   Template.sortBoard.helpers({
 
     sortedTable: function()
@@ -51,8 +56,9 @@ if (Meteor.isClient) {
       {
         var currency = currencies[i];
         var totalTransactions = Transactions.find().count();
-        var percentage = ((Transactions.find({"items.currency":currency}).count()/totalTransactions)* 100 ).toFixed(1) + "%";
-        percentages.push({'currency':currencyMap[currency], 'percentage': percentage});
+        var currencyCount = Transactions.find({"items.currency":currency}).count(); 
+        var percentage = ((currencyCount/totalTransactions)* 100 ).toFixed(1) + "%";
+        percentages.push({'currency':currencyMap[currency], 'count': currencyCount, 'percentage': percentage});
       }
       return percentages; 
     },
@@ -76,7 +82,7 @@ Template.sortBoard.events({
        var thisTrans = "Account ID: " + this["items.acctId"] + " Transaction Code: " + this["items.tranCode"] +  " Base Currency: " 
         + this["baseCurrency"] + " Currency: " + this["items.currency"] + " Amount: " + this["items.amount"]
         + " Time Stamp: " + this["timeStamp"];  
-       var deleted =  confirm("Are you sure you want to delete: " + thisTrans + " ? ");
+       var deleted =  confirm("Confirm Delete: " + this._id);
        if (deleted == true)
        {
           Transactions.remove(this._id); 
@@ -98,7 +104,36 @@ Template.sortBoard.events({
         var date = form["Date"].value;
         var time = form["Time"].value;
         var jsDT = date + "T" + time; 
+        var transInfo = [accountID, transactionCode, baseCurrency, currency, amount, date, time]
         
+        var internalJSON = {"acctId":accountID, "amount":amount, "tranCode": transactionCode, "currency": currency}; 
+        if(accountID == "")
+        {
+          delete internalJSON["acctId"]; 
+        }
+        if (transactionCode == "")
+        {
+          delete internalJSON["tranCode"];
+        }
+        if(currency == "")
+        {
+          delete internalJSON["currency"];  
+        }
+        if(amount == "")
+        {
+          delete internalJSON["amount"]; 
+        }
+        var myJSON = {"items": [internalJSON], 
+          baseCurrency: baseCurrency, timeStamp: jsDT }; 
+        
+        if (baseCurrency == "")
+        {
+          delete myJSON["baseCurrency"];
+        }    
+        if(date = "" && time == "")
+        {
+          delete myJSON["timeStamp"]; 
+        }
         var finalTransaction = "Account ID: " + accountID + " Transaction Code: " + transactionCode +  " Base Currency: " 
         + baseCurrency + " Currency: " + currency + " Amount: " + amount + " Date: " 
         + date + " Time: " + time;  
@@ -108,9 +143,8 @@ Template.sortBoard.events({
         // Adds a transaction with the user specified information from the form to Mongo Collection
         if(ok == true)
         {
-          Transactions.insert({"items": [{"acctId":accountID, "amount":amount, "tranCode": transactionCode, "currency": currency}], 
-          baseCurrency: baseCurrency, timeStamp: jsDT });
-
+          Transactions.insert(myJSON);
+          console.log(myJSON); 
           // Clear Form
 
           form["Account ID"].value=""; 
@@ -135,6 +169,10 @@ if (Meteor.isServer) {
     // code to run on server at startup
     // import data only when Products collection is empty
     //var fh = fopen (Assets.getText('simple.json'), 0);  
+    Meteor.publish("Transactions", function()
+    {
+        return Transactions.find(); 
+    }); 
 
   });
 }

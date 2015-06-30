@@ -1,4 +1,4 @@
-Transactions = new Mongo.Collection("Transactions");
+//Transactions = new Mongo.Collection("Transactions");
 
 var currencies = ["CAD", "USD", "HKD", "SGD" , "AUD", "GBP", "EUR", "YEN", "INR"];
 var currencyMap = {"CAD": "Canadian Dollars", "USD":"US Dollars", "HKD":"Hong Kong Dollars", "SGD":"Singapore Dollars" 
@@ -15,11 +15,11 @@ if (Meteor.isClient) {
   }
   Template.sortBoard.helpers({
 
-    sortedTable: function()
-    {
-      var sortBy = Session.get("cursor");
-      return Transactions.find({}, {sort:{sortBy:1}}); 
-    },
+    // sortedTable: function()
+    // {
+    //   var sortBy = Session.get("cursor");
+    //   return Transactions.find({}, {sort:{sortBy:1}}); 
+    // },
     criteria: function()
     {
       return Session.get("cursor"); 
@@ -28,28 +28,28 @@ if (Meteor.isClient) {
       return Transactions.find().count();
     },
 
-    fixAmount: function(amount){
-      var amount = amount + ""; 
-      var index = amount.indexOf("#");
-      if (amount !== "Unknown" && index >= 0)
-      {
-        return amount.substring(0, index);
-      }
-      else
-      {
-        if (amount !== "Unknown")
-        {
-          return parseFloat(amount).toFixed(2); 
-        }
-        else
-        {
-          return amount; 
-        }
-      }
-    },
-    formatDate: function(date){
-      return moment(date).format('MMM Do, YYYY h:mm:ss a'); 
-    },
+    // fixAmount: function(amount){
+    //   var amount = amount + ""; 
+    //   var index = amount.indexOf("#");
+    //   if (amount !== "Unknown" && index >= 0)
+    //   {
+    //     return amount.substring(0, index);
+    //   }
+    //   else
+    //   {
+    //     if (amount !== "Unknown")
+    //     {
+    //       return parseFloat(amount).toFixed(2); 
+    //     }
+    //     else
+    //     {
+    //       return amount; 
+    //     }
+    //   }
+    // },
+    // formatDate: function(date){
+    //   return moment(date).format('MMM Do, YYYY h:mm:ss a'); 
+    // },
     distribution: function(){
       var percentages = [];
       for (var i =0; i < currencies.length; i++)
@@ -76,19 +76,19 @@ Template.sortBoard.events({
         Session.set("cursor", criteria);
       },
       
-      "click .delete":function(){
+//       "click .delete":function(){
 
-       var thisTrans = "Account ID: " + this["items.acctId"] + " Transaction Code: " + this["items.tranCode"] +  " Base Currency: " 
-        + this["baseCurrency"] + " Currency: " + this["items.currency"] + " Amount: " + this["items.amount"]
-        + " Time Stamp: " + this["timeStamp"];  
-       var deleted =  confirm("Confirm Delete: " + this._id);
-       if (deleted == true)
-       {
-          Meteor.call("deleteTransaction", this._id); 
-       } 
-//        Transactions.find({"_id":"this._id"}); 
+//        var thisTrans = "Account ID: " + this["items.acctId"] + " Transaction Code: " + this["items.tranCode"] +  " Base Currency: " 
+//         + this["baseCurrency"] + " Currency: " + this["items.currency"] + " Amount: " + this["items.amount"]
+//         + " Time Stamp: " + this["timeStamp"];  
+//        var deleted =  confirm("Confirm Delete: " + this._id);
+//        if (deleted == true)
+//        {
+//           Meteor.call("deleteTransaction", this._id); 
+//        } 
+// //        Transactions.find({"_id":"this._id"}); 
 
-      },
+//       },
       
       'click .add':function ()
       {
@@ -180,7 +180,6 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
     // import data only when Products collection is empty
-    //var fh = fopen (Assets.getText('simple.json'), 0);  
     Meteor.publish("Transactions", function()
     {
         return Transactions.find(); 

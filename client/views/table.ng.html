@@ -1,18 +1,17 @@
-	<div ng-controller="TableCtrl">
-		<table align="center" id="Sorted Table" style="width:95%">
-			<tr>
-				<th></th>
-				<th ng-repeat="field in fields">{{field}}</th>
-			</tr>
-			<tr ng-repeat="transaction in transactions">
-				<td><button ng-click="remove(transaction)">X</button></td>
-				<td>{{items(transaction._id, "acctId")}}</td>
-				<td>{{items(transaction._id, "tranCode")}}</td> 
-				<td>{{transaction.baseCurrency}}</td>
-				<td>{{items(transaction._id, "currency")}}</td>
-				<td>{{fixAmount(items(transaction._id, "amount"))}}</td>
-				<td>{{formatDate(transaction.timeStamp)}}</td>
-			</tr>
-		</table>
-
-	</div>
+<div ng-controller="TableCtrl">
+	<table align="center" id="Sorted Table" style="width:95%">
+		<tr>
+			<th ng-show="$root.currentUser"></th>
+			<th ng-repeat="field in fields">{{field}}</th>
+		</tr>
+		<tr ng-repeat="transaction in transactions">
+			<td ng-show="$root.currentUser"><button ng-click="remove(transaction)">X</button></td>
+			<td>{{items(transaction._id, "acctId")}}</td>
+			<td>{{items(transaction._id, "tranCode")}}</td> 
+			<td>{{transaction.baseCurrency}}</td>
+			<td>{{items(transaction._id, "currency")}}</td>
+			<td>{{fixAmount(items(transaction._id, "amount"))}}</td>
+			<td>{{formatDate(transaction.timeStamp)}}</td>
+		</tr>
+	</table>
+</div>

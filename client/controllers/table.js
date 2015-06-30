@@ -2,9 +2,24 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 		function($scope, $meteor){
 			$scope.fields = ["Account ID", "Transaction Code", "Base Currency", "Currency", "Amount", "Time Stamp"];
 			$meteor.subscribe("transactions"); 
-			$scope.transactions = $meteor.collection(Transactions1);
+			$scope.transactions = $meteor.collection(Transactions);
 			$scope.remove = function(transaction){
-				$scope.transactions.splice($scope.transactions.indexOf(transaction), 1); 
+
+				var thisTrans =   " Base Currency: " 
+				 + transaction["baseCurrency"];
+				if (typeof transaction["items"] != 'undefined')
+				{
+					thisTrans = "Account ID: " + transaction["items"][0]["acctId"] + " Transaction Code: " 
+					+ transaction["items"][0]["tranCode"] + thisTrans +  " Currency: " 
+					+ transaction["items"][0]["currency"] + " Amount: " + transaction["items"][0]["amount"]; 
+
+				}  
+				thisTrans = thisTrans + " Time Stamp: " + transaction["timeStamp"];
+       			var deleted =  confirm("Confirm Delete: \n" + thisTrans);
+				if (deleted)
+				{
+					$scope.transactions.splice($scope.transactions.indexOf(transaction), 1); 
+				}
 			};
 			$scope.fixAmount = function(amount){
 				var amount = amount + ""; 
@@ -26,7 +41,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 				}
 			};
 			$scope.items = function(userId, field) {
-				console.log(field);   
+				//console.log(field);   
 				// console.log("userId: " + userId)
 				var thisID = "Unknown"; 
 				for (var i =0; i < $scope.transactions.length; i++)
@@ -35,23 +50,13 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 					{
 						if (typeof $scope.transactions[i]["items"] != 'undefined')
 						{
-							thisId = $scope.transactions[i]["items"][0][field]; 
+							return $scope.transactions[i]["items"][0][field]; 
 						}
 						else
 						{
 							return "Unknown";
 						} 
 					}
-				}
-				console.log(thisId); 
-				if(thisId == "")
-				{
-					console.log("Unknown");
-					return "Unknown";
-				}
-				else
-				{
-					return thisId;
 				}
 			 };
 	

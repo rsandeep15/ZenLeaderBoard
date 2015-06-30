@@ -1,0 +1,25 @@
+	<div ng-controller="TableCtrl">
+		<table align="center" id="Sorted Table" style="width:95%">
+			<tr>
+<!-- 				{{#if currentUser}}
+				<th></th>
+				{{/if}} -->
+				<th ng-repeat="field in fields">{{field}}</th>
+			</tr>
+
+<!-- 			{{#each sortedTable}} -->
+			<tr ng-repeat="transaction in transactions">
+<!-- 				{{#if currentUser}}
+				<button class="delete">&times;</button>
+				{{/if}} -->
+				<td>{{transaction.items["acctId"]}}</td> 
+<!-- 				<td>{{#each transaction.items}}{{tranCode}}{{else}}Unknown{{/each}}</td>  -->
+				<td>{{transaction.baseCurrency}}</td>
+<!-- 				<td>{{#each items}}{{currency}}{{else}}Unknown{{/each}}</td>
+				<td>{{#each items}}{{fixAmount amount}}{{else}}Unknown{{/each}}</td>   -->
+<!-- 				<td>{{formatDate timeStamp}}</td>  -->
+			</tr>
+<!-- 			{{/each}} -->
+		</table>
+
+	</div>

@@ -63,20 +63,19 @@ if (Meteor.isClient) {
       return percentages; 
     },
   });
+
 Template.sortBoard.events({
-  'click':function(event){
-    event.preventDefault();
-    var elem = document.getElementById("Sorted Table");
-
-    var sortCriteria = document.getElementById("criteria").value; 
-
+      'click':function(event){
+        event.preventDefault();
+        var elem = document.getElementById("Sorted Table");
+        var sortCriteria = document.getElementById("criteria").value; 
         //console.log(sortCriteria);
         var criteriaMap = {"Account ID":"items.acctId", "Base Currency":"baseCurrency", 
         "Currency":"items.currency", "Amount":"items.amount", "Time Stamp":"timeStamp"}; 
-        
         criteria = criteriaMap[sortCriteria];
         Session.set("cursor", criteria);
       },
+      
       "click .delete":function(){
 
        var thisTrans = "Account ID: " + this["items.acctId"] + " Transaction Code: " + this["items.tranCode"] +  " Base Currency: " 
@@ -85,12 +84,13 @@ Template.sortBoard.events({
        var deleted =  confirm("Confirm Delete: " + this._id);
        if (deleted == true)
        {
-          Transactions.remove(this._id); 
+          Meteor.call("deleteTransaction", this._id); 
        } 
 //        Transactions.find({"_id":"this._id"}); 
 
       },
-      'click .hit':function ()
+      
+      'click .add':function ()
       {
 
         // Retrive User Entered info from the form  
@@ -143,7 +143,7 @@ Template.sortBoard.events({
         // Adds a transaction with the user specified information from the form to Mongo Collection
         if(ok == true)
         {
-          Transactions.insert(myJSON);
+          Meteor.call("addTransaction", myJSON); 
           console.log(myJSON); 
           // Clear Form
 
@@ -155,14 +155,26 @@ Template.sortBoard.events({
           form["Date"].value="";
           form["Time"].value=""; 
         }
-
-
-
         return false;  
       }
     });
 
 }
+Meteor.methods({
+addTransaction: function(myJson)
+{
+  if(! Meteor.userId())
+  {
+    throw new Meteor.Error("not-authorized");
+  }
+  Transactions.insert(myJson); 
+},
+deleteTransaction: function(taskId)
+{
+  Transactions.remove(taskId); 
+}
+
+});
 
 if (Meteor.isServer) {
   Meteor.startup(function () {

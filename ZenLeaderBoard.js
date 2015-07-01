@@ -1,29 +1,10 @@
-//Transactions = new Mongo.Collection("Transactions");
-
 var currencies = ["CAD", "USD", "HKD", "SGD" , "AUD", "GBP", "EUR", "YEN", "INR"];
 var currencyMap = {"CAD": "Canadian Dollars", "USD":"US Dollars", "HKD":"Hong Kong Dollars", "SGD":"Singapore Dollars" 
 , "AUD":"Australian Dollars", "GBP":"British Pounds", "EUR": "Euros", "YEN":"Japanese Yen", "INR":"Indian Rupees"};
 
-var criteria = 'items.acctId'; 
-
 if (Meteor.isClient) {
   Meteor.subscribe("Transactions");
-
-  Template.sortBoard.created = function()
-  {
-      Session.setDefault("cursor", "items.acctId");
-  }
   Template.sortBoard.helpers({
-
-    // sortedTable: function()
-    // {
-    //   var sortBy = Session.get("cursor");
-    //   return Transactions.find({}, {sort:{sortBy:1}}); 
-    // },
-    criteria: function()
-    {
-      return Session.get("cursor"); 
-    },
     counter: function(){
       return Transactions.find().count();
     },
@@ -42,17 +23,6 @@ if (Meteor.isClient) {
   });
 
 Template.sortBoard.events({
-      'click':function(event){
-        event.preventDefault();
-        var elem = document.getElementById("Sorted Table");
-        var sortCriteria = document.getElementById("criteria").value; 
-        //console.log(sortCriteria);
-        var criteriaMap = {"Account ID":"items.acctId", "Base Currency":"baseCurrency", 
-        "Currency":"items.currency", "Amount":"items.amount", "Time Stamp":"timeStamp"}; 
-        criteria = criteriaMap[sortCriteria];
-        Session.set("cursor", criteria);
-      },
-      
       'click .add':function ()
       {
 
@@ -107,7 +77,7 @@ Template.sortBoard.events({
         if(ok == true)
         {
           Meteor.call("addTransaction", myJSON); 
-          console.log(myJSON); 
+          
           // Clear Form
 
           form["Account ID"].value=""; 
@@ -124,12 +94,12 @@ Template.sortBoard.events({
 
 }
 Meteor.methods({
-addTransaction: function(myJson)
-{
-  if(! Meteor.userId())
+  addTransaction: function(myJson)
   {
-    throw new Meteor.Error("not-authorized");
+    if(! Meteor.userId())
+    {
+      throw new Meteor.Error("not-authorized");
+    }
+    Transactions.insert(myJson); 
   }
-  Transactions.insert(myJson); 
-}
 });

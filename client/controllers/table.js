@@ -13,6 +13,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 			$scope.transactions = $meteor.collection(function(){
 				return Transactions.find({}, {sort: $scope.getReactively('sort')}); 
 			});
+			
 			$scope.$watch('category', function(){
 				if($scope.category)
 				{
@@ -20,6 +21,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
         			$scope.sort = $scope.UTIL.createSort($scope.category, $scope.order); 
         		}
 			});
+
 			$scope.$watch('order', function(){
 				if ($scope.order)
 				{
@@ -35,6 +37,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 					$scope.sort = $scope.UTIL.createSort($scope.category, $scope.order); 
 				}
 			}); 
+
 			$scope.remove = function(transaction){
 
 				var thisTrans =   " Base Currency: " 
@@ -53,6 +56,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 					$scope.transactions.splice($scope.transactions.indexOf(transaction), 1); 
 				}
 			};
+
 			$scope.fixAmount = function(amount){
 				var amount = amount + ""; 
 				var index = amount.indexOf("#");
@@ -72,9 +76,8 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 				  }
 				}
 			};
+
 			$scope.items = function(userId, field) {
-				//console.log(field);   
-				// console.log("userId: " + userId)
 				var thisID = "Unknown"; 
 				for (var i =0; i < $scope.transactions.length; i++)
 				{
@@ -91,7 +94,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 					}
 				}
 			 };
-	
+
 			$scope.formatDate = function(date){
       			return moment(date).format('MMM Do, YYYY h:mm:ss a'); 
     		}; 

@@ -16,12 +16,14 @@
 	</div>
 	<p> Sort Criteria: {{category}} : {{strOrder}} </p>
 	<p>Live Transactions</p>
+	<input type ="search" ng-model="search" placeholder="Search"> 
 	<table align="center" id="Sorted Table" style="width:95%">
 		<tr>
 			<th ng-show="$root.currentUser"></th>
 			<th ng-repeat="field in fields">{{field}}</th>
 		</tr>
 		<tr ng-repeat="transaction in transactions">
+<!-- 		<tr dir-paginate="transaction in transactions | itemsPerPage: perPage" total-items="86">	 -->
 			<td ng-show="$root.currentUser"><button ng-click="remove(transaction)">X</button></td>
 			<td>{{items(transaction._id, "acctId")}}</td>
 			<td>{{items(transaction._id, "tranCode")}}</td> 
@@ -31,4 +33,5 @@
 			<td>{{formatDate(transaction.timeStamp)}}</td>
 		</tr>
 	</table>
+<!-- 	<dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls> -->
 </div>

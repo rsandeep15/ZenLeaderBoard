@@ -3,7 +3,10 @@ var currencyMap = {"CAD": "Canadian Dollars", "USD":"US Dollars", "HKD":"Hong Ko
 , "AUD":"Australian Dollars", "GBP":"British Pounds", "EUR": "Euros", "YEN":"Japanese Yen", "INR":"Indian Rupees"};
 
 if (Meteor.isClient) {
-  Meteor.subscribe("Transactions");
+  
+  //The vital stats table needs access to the whole colleciton
+  Meteor.subscribe("transactions");
+  
   Template.sortBoard.helpers({
     counter: function(){
       return Transactions.find().count();

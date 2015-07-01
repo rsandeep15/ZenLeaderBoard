@@ -1,4 +1,4 @@
-angular.module('ZenLeaderBoard', ['angular-meteor']).run(function($rootScope){
+angular.module('ZenLeaderBoard', ['angular-meteor', 'angularUtils.directives.dirPagination']).run(function($rootScope){
 	$rootScope.UTIL = {
 		createSort: function(criteria, order)
 		{

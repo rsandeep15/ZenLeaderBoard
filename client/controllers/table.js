@@ -1,19 +1,35 @@
-angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
-		function($scope, $meteor){
+angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '$rootScope',
+		function($scope, $meteor, $rootScope){
 			$scope.fields = ["Account ID", "Transaction Code", "Base Currency", "Currency", "Amount", "Time Stamp"];
 			$scope.category = "Account ID";
 			$scope.order = '1';
 			$scope.strOrder = 'Ascending' 
-			$scope.sort = {"items.acctId":1}; 
-			$meteor.autorun($scope, function()
-			{
-				$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')});
-			}); 
+			$scope.sort = {}; 
+			
+			$scope.page = 1;
+			$scope.perPage = 10;  
 			
 			$scope.transactions = $meteor.collection(function(){
-				return Transactions.find({}, {sort: $scope.getReactively('sort')}); 
+				return Transactions.find({}, {sort: $scope.getReactively('sort')});
 			});
-			
+
+			$meteor.autorun($scope, function()
+			{
+				// $meteor.subscribe("transactions", {limit: parseInt($scope.getReactively('perPage')), 
+				// 	skip: parseInt(($scope.getReactively('page') - 1) * $scope.getReactively('perPage')), 
+				// 	sort: $scope.getReactively('sort')}).then(function(){
+				// 	$scope.transactionsCount = $meteor.object(Counts, 'numberOfTransactions', false); 
+				// $meteor.subscribe("transactions", {limit: parseInt($scope.getReactively('perPage')), 
+				// 	skip: parseInt(($scope.getReactively('page') - 1) * $scope.getReactively('perPage')), 
+				// 	sort: $scope.getReactively('sort')}); 
+			var searchString = $scope.getReactively('search');
+			var field = $scope.getReactively('category'); 
+			console.log(searchString);
+			$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')}, field, searchString ); 
+				// });
+			}); 
+
+
 			$scope.$watch('category', function(){
 				if($scope.category)
 				{
@@ -97,6 +113,11 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 
 			$scope.formatDate = function(date){
       			return moment(date).format('MMM Do, YYYY h:mm:ss a'); 
+    		}; 
+
+    		$scope.pageChanged = function(newPage){
+    			console.log(newPage);
+    			$scope.page = newPage; 
     		}; 
 		}
 ]);

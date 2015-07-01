@@ -1,3 +1,3 @@
-  Meteor.publish("transactions", function(){
-    return Transactions.find({}); 
+  Meteor.publish("transactions", function(options){
+    return Transactions.find({}, options); 
   }); 

@@ -27,29 +27,6 @@ if (Meteor.isClient) {
     counter: function(){
       return Transactions.find().count();
     },
-
-    // fixAmount: function(amount){
-    //   var amount = amount + ""; 
-    //   var index = amount.indexOf("#");
-    //   if (amount !== "Unknown" && index >= 0)
-    //   {
-    //     return amount.substring(0, index);
-    //   }
-    //   else
-    //   {
-    //     if (amount !== "Unknown")
-    //     {
-    //       return parseFloat(amount).toFixed(2); 
-    //     }
-    //     else
-    //     {
-    //       return amount; 
-    //     }
-    //   }
-    // },
-    // formatDate: function(date){
-    //   return moment(date).format('MMM Do, YYYY h:mm:ss a'); 
-    // },
     distribution: function(){
       var percentages = [];
       for (var i =0; i < currencies.length; i++)
@@ -75,20 +52,6 @@ Template.sortBoard.events({
         criteria = criteriaMap[sortCriteria];
         Session.set("cursor", criteria);
       },
-      
-//       "click .delete":function(){
-
-//        var thisTrans = "Account ID: " + this["items.acctId"] + " Transaction Code: " + this["items.tranCode"] +  " Base Currency: " 
-//         + this["baseCurrency"] + " Currency: " + this["items.currency"] + " Amount: " + this["items.amount"]
-//         + " Time Stamp: " + this["timeStamp"];  
-//        var deleted =  confirm("Confirm Delete: " + this._id);
-//        if (deleted == true)
-//        {
-//           Meteor.call("deleteTransaction", this._id); 
-//        } 
-// //        Transactions.find({"_id":"this._id"}); 
-
-//       },
       
       'click .add':function ()
       {
@@ -168,22 +131,5 @@ addTransaction: function(myJson)
     throw new Meteor.Error("not-authorized");
   }
   Transactions.insert(myJson); 
-},
-deleteTransaction: function(taskId)
-{
-  Transactions.remove(taskId); 
 }
-
 });
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-    // import data only when Products collection is empty
-    Meteor.publish("Transactions", function()
-    {
-        return Transactions.find(); 
-    }); 
-
-  });
-}

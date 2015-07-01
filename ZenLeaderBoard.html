@@ -53,19 +53,6 @@
 			</form>
 		</div>
 	{{/if}}
-	
-	<div>
-		<input type="submit" value= "Sort"/>
-
-		<select id="criteria">
-			<option value="Account ID">Account ID</option>
-			<option value="Base Currency">Base Currency</option>
-			<option value="Currency">Currency</option>
-			<option value="Amount">Amount</option>
-			<option value="Time Stamp">Time Stamp</option>
-		</select>
-
-	</div>
 
 	<div>
 		<p>Vital Statistics</p>
@@ -90,40 +77,6 @@
 				<td><h4>100.0%</h4></td> 
 			</tr>
 		</table>
-		<p> Sort Criteria: {{criteria}} </p>
-		<p>Live Transactions</p>
+
 	</div>	
-
-
-
-<!-- 	<div>
-		<table align="center" id="Sorted Table" style="width:95%">
-			<tr>
-				{{#if currentUser}}
-				<th></th>
-				{{/if}}
-				<th>Account ID</th> 
-				<th>Transaction Code</th>
-				<th>Base Currency</th> 
-				<th>Currency</th> 
-				<th>Amount</th> 
-				<th>Time Stamp</th>
-			</tr>
-
-			{{#each sortedTable}}
-			<tr >
-				{{#if currentUser}}
-				<button class="delete">&times;</button>
-				{{/if}}
-				<td>{{#each items}}{{acctId}}{{else}}Unknown{{/each}}</td> 
-				<td>{{#each items}}{{tranCode}}{{else}}Unknown{{/each}}</td> 
-				<td>{{baseCurrency}}</td>
-				<td>{{#each items}}{{currency}}{{else}}Unknown{{/each}}</td>
-				<td>{{#each items}}{{fixAmount amount}}{{else}}Unknown{{/each}}</td>  
-				<td>{{formatDate timeStamp}}</td> 
-			</tr>
-			{{/each}}
-		</table>
-	</div> -->
-
 </template> 

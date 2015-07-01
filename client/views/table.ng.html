@@ -1,4 +1,16 @@
 <div ng-controller="TableCtrl">
+	<div>
+		<select ng-model="category">
+			<option value="Account ID">Account ID</option>
+			<option value="Transaction Code">Transaction Code</option>
+			<option value="Base Currency">Base Currency</option>
+			<option value="Currency">Currency</option>
+			<option value="Amount">Amount</option>
+			<option value="Time Stamp">Time Stamp</option>
+		</select>
+	</div>
+	<p> Sort Criteria: {{category}} </p>
+	<p>Live Transactions</p>
 	<table align="center" id="Sorted Table" style="width:95%">
 		<tr>
 			<th ng-show="$root.currentUser"></th>

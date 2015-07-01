@@ -1,5 +1,6 @@
 <div ng-controller="TableCtrl">
 	<div>
+		<b> Sort table by: </b>
 		<select ng-model="category">
 			<option value="Account ID">Account ID</option>
 			<option value="Transaction Code">Transaction Code</option>
@@ -8,8 +9,12 @@
 			<option value="Amount">Amount</option>
 			<option value="Time Stamp">Time Stamp</option>
 		</select>
+		<select ng-model="order">
+			<option value = "1">Ascending</option>
+			<option value = "-1">Descending</option>
+		</select>
 	</div>
-	<p> Sort Criteria: {{category}} </p>
+	<p> Sort Criteria: {{category}} : {{strOrder}} </p>
 	<p>Live Transactions</p>
 	<table align="center" id="Sorted Table" style="width:95%">
 		<tr>

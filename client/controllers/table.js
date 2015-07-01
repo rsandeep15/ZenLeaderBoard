@@ -1,47 +1,40 @@
 angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor',
 		function($scope, $meteor){
 			$scope.fields = ["Account ID", "Transaction Code", "Base Currency", "Currency", "Amount", "Time Stamp"];
-			$scope.category = "items.acctId";
+			$scope.category = "Account ID";
+			$scope.order = '1';
+			$scope.strOrder = 'Ascending' 
 			$scope.sort = {"items.acctId":1}; 
 			$meteor.autorun($scope, function()
 			{
 				$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')});
 			}); 
-			$scope.$watch('category', function(){
-				if($scope.category)
-				{
-					var i = $scope.category;
-				    var criteriaMap = {"Account ID":"items.acctId", "Transaction Code":"items.tranCode", "Base Currency":"baseCurrency", 
-        			"Currency":"items.currency", "Amount":"items.amount", "Time Stamp":"timeStamp"};
-        			var criteria = criteriaMap[i];  
-        			switch(criteria) {
-        				case "items.acctId":
-        					$scope.sort = {"items.acctId" : 1};
-        					break;
-        				case "items.tranCode":
-        					$scope.sort = {"items.tranCode" : 1};
-        					break;
-        				case "baseCurrency":
-        					$scope.sort = {"baseCurrency" : 1};
-        					break; 
-        				case "items.currency":
-        					$scope.sort = {"items.currency" : 1};
-        					break;
-        				case "items.amount":
-        					$scope.sort = {"items.amount" : 1};
-        					break;
-        				case "timeStamp":
-        					$scope.sort = {"timeStamp" : 1};
-        					break;
-        				default: 
-        					$scope.sort = {"items.acctId" : 1};
-        			}
-					console.log($scope.sort);
-				}
-			});
+			
 			$scope.transactions = $meteor.collection(function(){
 				return Transactions.find({}, {sort: $scope.getReactively('sort')}); 
 			});
+			$scope.$watch('category', function(){
+				if($scope.category)
+				{
+					// Generates a new way of sorting using a private utility method being passed the category and order field variables. See app.js 
+        			$scope.sort = $scope.UTIL.createSort($scope.category, $scope.order); 
+        		}
+			});
+			$scope.$watch('order', function(){
+				if ($scope.order)
+				{
+					if ($scope.order == '1')
+					{
+						$scope.strOrder = 'Ascending';
+
+					}
+					else if ($scope.order == '-1')
+					{
+						$scope.strOrder = 'Descending';
+					}
+					$scope.sort = $scope.UTIL.createSort($scope.category, $scope.order); 
+				}
+			}); 
 			$scope.remove = function(transaction){
 
 				var thisTrans =   " Base Currency: " 

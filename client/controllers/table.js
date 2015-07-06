@@ -15,7 +15,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 			$meteor.autorun($scope, function()
 			{ 
 				var searchString = $scope.getReactively('search');
-				
+
 				$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')}, $scope.getReactively(
 				'category'), $scope.getReactively('search') ); 
 			}); 
@@ -52,10 +52,10 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 				{
 					thisTrans = "Account ID: " + transaction["items"][0]["acctId"] + " Transaction Code: " 
 					+ transaction["items"][0]["tranCode"] + thisTrans +  " Currency: " 
-					+ transaction["items"][0]["currency"] + " Amount: " + transaction["items"][0]["amount"]; 
+					+ transaction["items"][0]["currency"] + " Amount: " + $scope.fixAmount(transaction["items"][0]["amount"]); 
 
 				}  
-				thisTrans = thisTrans + " Time Stamp: " + transaction["timeStamp"];
+				thisTrans = thisTrans + " Time Stamp: " + $scope.formatDate(transaction["timeStamp"]);
        			var deleted =  confirm("Confirm Delete: \n" + thisTrans);
 				if (deleted)
 				{

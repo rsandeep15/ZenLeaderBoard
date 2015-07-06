@@ -15,7 +15,7 @@
 	<p>Live Transactions</p>
 	<input type ="search" ng-model="search" placeholder="Search" id ="searchBox"><!--  <input type="file" id="fileUpload" accept=".json"> -->
 <!-- 	Show this if no matched transactions -->
-	<p ng-hide="transactions.length" id="NoResults"> No results found for {{search}}</p>
+	<p ng-hide="transactions.length" id="NoResults"> No results found for <mark>{{search}}</mark></p>
 
 	<table id="Sorted Table" ng-show="transactions.length">
 		<tr>

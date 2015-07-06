@@ -5,8 +5,8 @@
   border-radius: 10px; 
   background-color: #CCCCFF;
   border-color: #660099;
+  box-shadow: 5px 5px 9px black; 
   color:gray;
-
 }
 #searchBox{
   vertical-align: middle;
@@ -15,6 +15,7 @@
   border-radius: 10px; 
   background-color: #CCCCFF;
   border-color: #660099;
+  box-shadow: 5px 5px 9px black; 
   color:#FFFFFF;
 }
 #fileUpload{
@@ -36,7 +37,7 @@ table, th, td{
   border: 1px ridge #660066;
   font-size: 1.00em;
   font-weight: normal; 
-      vertical-align: middle; 
+  vertical-align: middle; 
   color: #FFFFFF;
 /*  text-align: center;*/
 }

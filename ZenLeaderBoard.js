@@ -22,7 +22,7 @@ if (Meteor.isClient) {
         percentages.push({'currency':currencyMap[currency], 'count': currencyCount, 'percentage': percentage});
       }
       return percentages; 
-    },
+    }
   });
 
 Template.sortBoard.events({

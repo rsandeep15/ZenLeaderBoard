@@ -23,12 +23,12 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 				// 	skip: parseInt(($scope.getReactively('page') - 1) * $scope.getReactively('perPage')), 
 				// 	sort: $scope.getReactively('sort')}); 
 			var searchString = $scope.getReactively('search');
-			var field = $scope.getReactively('category'); 
+			// var field = $scope.getReactively('category'); 
 			console.log(searchString);
-			$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')}, field, searchString ); 
+			$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')}, $scope.getReactively(
+				'category'), $scope.getReactively('search') ); 
 				// });
 			}); 
-
 
 			$scope.$watch('category', function(){
 				if($scope.category)

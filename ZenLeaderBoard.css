@@ -1,4 +1,9 @@
 /* CSS declarations go here */
+h1 {
+  font-size: 3.0em;
+  text-align: center;
+  color: #FFFFFF
+}
 body {
   font-family: sans-serif;
   background-color: #352481;
@@ -46,11 +51,6 @@ img
   height:100px;
   width: 100px;
 }
-h1 {
-  font-size: 3.0em;
-  text-align: center;
-  color: #FFFFFF
-}
 div {
   font-size: 1.4em;
   font-family: Verdana;
@@ -74,18 +74,4 @@ table, th, td{
   color: #FFFFFF;
   text-align: center;
   margin-bottom: 30px;
-}
-table, th
-{
-  color: #6699FF;
-  border: transparent;
-}
-table, td:hover{
-  color: #FFFF00; 
-}
-table tr button{
-  color:red;
-  background-color: #6600CC;
-  border:transparent;
-  border-radius: 100%;
 }

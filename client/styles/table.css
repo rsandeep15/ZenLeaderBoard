@@ -1,0 +1,35 @@
+#searchBox{
+  vertical-align: middle;
+  padding: 10px 10px 10px 10px;
+  margin: 10px 10px 10px 10px; 
+  border-radius: 10px; 
+  background-color: #CCCCFF;
+  border-color: #660099;
+  color:#FFFFFF;
+}
+table, th, td{
+  border: 1px ridge #660066;
+  font-size: 1.00em;
+  font-weight: normal; 
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 30px;
+}
+table, th
+{
+  color: #6699FF;
+  border: transparent;
+}
+table, td:hover{
+  color: #FFFF00; 
+}
+table tr button{
+  color:red;
+  background-color: #6600CC;
+  border:transparent;
+  border-radius: 100%;
+  box-shadow: 2px 2px 1px black; 
+  vertical-align: middle;
+  padding: 10px 10px 10px 10px; 
+  margin: auto;
+}

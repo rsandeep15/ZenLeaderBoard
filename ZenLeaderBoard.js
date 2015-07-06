@@ -5,7 +5,7 @@ var currencyMap = {"CAD": "Canadian Dollars", "USD":"US Dollars", "HKD":"Hong Ko
 if (Meteor.isClient) {
   
   //The vital stats table needs access to the whole colleciton
-  Meteor.subscribe("transactions");
+  //Meteor.subscribe("transactions");
   
   Template.sortBoard.helpers({
     counter: function(){

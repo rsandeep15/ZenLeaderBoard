@@ -24,7 +24,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 				// 	sort: $scope.getReactively('sort')}); 
 			var searchString = $scope.getReactively('search');
 			// var field = $scope.getReactively('category'); 
-			console.log(searchString);
+			// console.log(searchString);
 			$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')}, $scope.getReactively(
 				'category'), $scope.getReactively('search') ); 
 				// });

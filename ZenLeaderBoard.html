@@ -8,6 +8,7 @@
 	<a href = "http://www.zenbanx.com"><img src = "https://pbs.twimg.com/profile_images/598226607082352640/pJ2A1tF9.jpg"></a>
 	{{> loginButtons}}
 	{{> sortBoard}}
+<!-- 		<div ng-include="'client/views/stats.ng.html'"></div> -->
 	<div ng-include="'client/views/table.ng.html'"></div>
 
 </body>
@@ -57,9 +58,9 @@
 		<p>Vital Statistics</p>
 		<table align = "center" style="width:50%">
 			<tr>
-				<th>Currency</th>
-				<th>Count</th> 
-				<th>Percentage Used</th>
+				<th><b>Currency</b></th>
+				<th><b>Count</b></th> 
+				<th><b>Percentage Used</b></th>
 			</tr>
 
 			{{#each distribution}}

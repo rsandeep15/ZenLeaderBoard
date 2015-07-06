@@ -21,8 +21,8 @@
       searchString = parseFloat(searchString);
     }
     searchString = new RegExp( "^" + searchString, 'i');
-  	doc[field] = searchString;
-    // console.log(doc);
+    doc[field] = searchString;
+    console.log(doc);
     // console.log(Transactions.find(doc, options).count());
   	return Transactions.find( doc , options);
   }); 

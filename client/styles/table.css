@@ -1,3 +1,13 @@
+.selector{
+  vertical-align: middle;
+  padding: 10px 10px 10px 10px;
+  margin: 10px 10px 10px 10px; 
+  border-radius: 10px; 
+  background-color: #CCCCFF;
+  border-color: #660099;
+  color:gray;
+
+}
 #searchBox{
   vertical-align: middle;
   padding: 10px 10px 10px 10px;
@@ -7,13 +17,28 @@
   border-color: #660099;
   color:#FFFFFF;
 }
+#fileUpload{
+  padding: auto; 
+  margin: 10px 10px 10px 10px;
+}
+#NoResults{
+  color: #FFFFFF; 
+  margin-bottom: 30px; 
+}
+table{
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%; 
+}
 table, th, td{
+
   border: 1px ridge #660066;
   font-size: 1.00em;
   font-weight: normal; 
+      vertical-align: middle; 
   color: #FFFFFF;
-  text-align: center;
-  margin-bottom: 30px;
+/*  text-align: center;*/
 }
 table, th
 {
@@ -25,11 +50,11 @@ table, td:hover{
 }
 table tr button{
   color:red;
-  background-color: #6600CC;
+  background-color: #9900FF;
   border:transparent;
   border-radius: 100%;
   box-shadow: 2px 2px 1px black; 
-  vertical-align: middle;
-  padding: 10px 10px 10px 10px; 
-  margin: auto;
+  margin: 2px 2px 2px 2px;
+  padding: auto; 
+  display: block; 
 }

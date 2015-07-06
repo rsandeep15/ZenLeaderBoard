@@ -5,7 +5,6 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 			$scope.order = '1';
 			$scope.strOrder = 'Ascending' 
 			$scope.sort = {}; 
-			
 			$scope.page = 1;
 			$scope.perPage = 10;  
 			
@@ -14,20 +13,11 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 			});
 
 			$meteor.autorun($scope, function()
-			{
-				// $meteor.subscribe("transactions", {limit: parseInt($scope.getReactively('perPage')), 
-				// 	skip: parseInt(($scope.getReactively('page') - 1) * $scope.getReactively('perPage')), 
-				// 	sort: $scope.getReactively('sort')}).then(function(){
-				// 	$scope.transactionsCount = $meteor.object(Counts, 'numberOfTransactions', false); 
-				// $meteor.subscribe("transactions", {limit: parseInt($scope.getReactively('perPage')), 
-				// 	skip: parseInt(($scope.getReactively('page') - 1) * $scope.getReactively('perPage')), 
-				// 	sort: $scope.getReactively('sort')}); 
-			var searchString = $scope.getReactively('search');
-			// var field = $scope.getReactively('category'); 
-			// console.log(searchString);
-			$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')}, $scope.getReactively(
+			{ 
+				var searchString = $scope.getReactively('search');
+				
+				$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')}, $scope.getReactively(
 				'category'), $scope.getReactively('search') ); 
-				// });
 			}); 
 
 			$scope.$watch('category', function(){
@@ -119,5 +109,22 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
     			console.log(newPage);
     			$scope.page = newPage; 
     		}; 
+
+//     		$scope.getDistribution = function(){
+//     			  var percentages = [];
+//     			  var currencies = ["CAD", "USD", "HKD", "SGD" , "AUD", "GBP", "EUR", "YEN", "INR"];
+//     			  var currencyMap = {"CAD": "Canadian Dollars", "USD":"US Dollars", "HKD":"Hong Kong Dollars", "SGD":"Singapore Dollars" 
+// , "AUD":"Australian Dollars", "GBP":"British Pounds", "EUR": "Euros", "YEN":"Japanese Yen", "INR":"Indian Rupees"};
+//     		      for (var i =0; i < currencies.length; i++)
+//     		      {
+//     		        var currency = currencies[i];
+//     		        var totalTransactions = Transactions.find().count();
+//     		        console.log(totalTransactions);
+//     		        var currencyCount = Transactions.find({"items.currency":currency}).count(); 
+//     		        var percentage = ((currencyCount/totalTransactions)* 100 ).toFixed(1) + "%";
+//     		        percentages.push({'currency':currencyMap[currency], 'count': currencyCount, 'percentage': percentage});
+//     		      }
+//     		      return percentages; 
+//     		};
 		}
 ]);

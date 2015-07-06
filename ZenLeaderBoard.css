@@ -39,6 +39,11 @@ body {
   font-family: Verdana;
 
   }
+.new-transaction >input{
+  border-radius: 10%; 
+  padding: auto;
+  margin-bottom: 10px;
+}
 header {
   padding: 20px 15px 15px 15px;
   position: relative;
@@ -69,7 +74,7 @@ div h4{
 }
 table, th, td{
   border: 1px ridge #660066;
-  font-size: 1.05em;
+  font-size: 1.00em;
   font-weight: normal; 
   color: #FFFFFF;
   text-align: center;

@@ -12,15 +12,33 @@
   	"Currency":"items.currency", "Amount":"items.amount", "Time Stamp":"timeStamp"};
   	var field = criteriaMap[criteria]; 
   	var doc = {};
+    
+    // Handles search for null fields
+    var nullRegex = new RegExp("^" + searchString, 'i');
+    var nullString = "unknown"; 
+    if (nullRegex.test(nullString) ){
+      doc[field] = null; 
+      return Transactions.find(doc, options); 
+    }
+
+    //Requires Exact Match 
     if (field == "items.acctId")
     {
-      searchString = parseInt(searchString);
+      searchString = parseInt(searchString); 
     }
     else if (field == "items.amount")
     {
       searchString = parseFloat(searchString);
     }
-    searchString = new RegExp( "^" + searchString, 'i');
+
+    else if (field == "timeStamp")
+    {
+      searchString = new RegExp(searchString); 
+    }
+    else
+    {
+      searchString = new RegExp( "^" + searchString, 'i');
+    }
     doc[field] = searchString;
     console.log(doc);
     // console.log(Transactions.find(doc, options).count());

@@ -7,7 +7,6 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 			$scope.sort = {}; 
 			$scope.page = 1;
 			$scope.perPage = 10;  
-			
 			$scope.transactions = $meteor.collection(function(){
 				return Transactions.find({}, {sort: $scope.getReactively('sort')});
 			});
@@ -64,23 +63,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 			};
 
 			$scope.fixAmount = function(amount){
-				var amount = amount + ""; 
-				var index = amount.indexOf("#");
-				if (amount !== "Unknown" && index >= 0)
-				{
-				  return amount.substring(0, index);
-				}
-				else
-				{
-				  if (amount !== "Unknown")
-				  {
-				    return parseFloat(amount).toFixed(2); 
-				  }
-				  else
-				  {
-				    return amount; 
-				  }
-				}
+				return $scope.UTIL.fixAmount(amount); 
 			};
 
 			$scope.items = function(userId, field) {
@@ -102,7 +85,7 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 			 };
 
 			$scope.formatDate = function(date){
-      			return moment(date).format('MMM Do, YYYY h:mm:ss a'); 
+      			return $scope.UTIL.formatDate(date); 
     		}; 
 
     		$scope.pageChanged = function(newPage){

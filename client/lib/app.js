@@ -8,6 +8,28 @@ angular.module('ZenLeaderBoard', ['angular-meteor', 'angularUtils.directives.dir
         	var modifiedSort = {};
         	modifiedSort[field] = parseInt(order);
         	return modifiedSort;   
+		},
+		formatDate: function(date){
+			return moment(date).format('MMM Do, YYYY h:mm:ss a'); 
+		},
+		fixAmount: function(amount){
+			var amount = amount + ""; 
+			var index = amount.indexOf("#");
+			if (amount !== "Unknown" && index >= 0)
+			{
+			  return amount.substring(0, index);
+			}
+			else
+			{
+			  if (amount !== "Unknown")
+			  {
+			    return parseFloat(amount).toFixed(2); 
+			  }
+			  else
+			  {
+			    return amount; 
+			  }
+			}
 		}
 	}
 }); 

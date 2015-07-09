@@ -44,7 +44,7 @@ Template.sortBoard.events({
           time = time + ":00";
         }
         var jsDT = date + "T" + time; 
-        var transInfo = [accountID, transactionCode, baseCurrency, currency, amount, date, time]
+        var transInfo = [accountID, transactionCode, baseCurrency, currency, amount, date, time];
         
         var internalJSON = {"acctId":accountID, "amount":amount, "tranCode": transactionCode, "currency": currency}; 
         if(accountID == "")
@@ -70,13 +70,12 @@ Template.sortBoard.events({
         {
           delete myJSON["baseCurrency"];
         }    
-        if(date = "" && time == "")
+        if(date == "" && time == "")
         {
           delete myJSON["timeStamp"]; 
         }
         var finalTransaction = "Account ID: " + accountID + " Transaction Code: " + transactionCode +  " Base Currency: " 
-        + baseCurrency + " Currency: " + currency + " Amount: " + amount + " Date: " 
-        + date + " Time: " + time;  
+        + baseCurrency + " Currency: " + currency + " Amount: " + amount + " Date: " + date + " Time: " + time;  
 
         var ok = confirm("Confirm Add: \n" + finalTransaction); 
 

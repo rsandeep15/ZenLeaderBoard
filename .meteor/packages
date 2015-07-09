@@ -8,7 +8,6 @@ meteor-platform
 insecure
 blaze
 momentjs:moment
-msavin:jetsetter
 accounts-ui
 accounts-password
 accounts-facebook

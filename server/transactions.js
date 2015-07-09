@@ -64,17 +64,19 @@
       var monthRegex = new RegExp("jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec", 'i')
       if (day == "-01")
       {
+        // Year only search
         if (month == "-01"  && searchString.search(/^jan/i) == -1)
         {
           dateTime = dateTime.substring(0, dateTime.indexOf("-")); 
         }
+        // Month year search
         else if (monthYearRegex.test(searchString))
         {
           dateTime = dateTime.substring(0, dateTime.lastIndexOf("-")); 
         }
+        // Month search
         else if (searchString.match(monthRegex))
         {
-          console.log("monthRegex!");
           dateTime = dateTime.substring(dateTime.indexOf("-"), dateTime.lastIndexOf("-") + 1); 
         }
       }

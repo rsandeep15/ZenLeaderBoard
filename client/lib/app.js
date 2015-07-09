@@ -1,4 +1,4 @@
-angular.module('ZenLeaderBoard', ['angular-meteor', 'angularUtils.directives.dirPagination']).run(function($rootScope){
+angular.module('ZenLeaderBoard', ['angular-meteor']).run(function($rootScope){
 	$rootScope.UTIL = {
 		createSort: function(criteria, order)
 		{
@@ -9,15 +9,15 @@ angular.module('ZenLeaderBoard', ['angular-meteor', 'angularUtils.directives.dir
         	modifiedSort[field] = parseInt(order);
         	return modifiedSort;   
 		},
-		formatDate: function(date){
-			return moment(date).format('MMM Do, YYYY h:mm:ss a'); 
+		formatDate: function(thisDate){
+			return moment(thisDate).format('MMM Do, YYYY h:mm:ss a'); 
 		},
 		fixAmount: function(amount){
 			var amount = amount + ""; 
 			var index = amount.indexOf("#");
 			if (amount !== "Unknown" && index >= 0)
 			{
-			  return amount.substring(0, index);
+			  return amount.substring(0, index); 
 			}
 			else
 			{

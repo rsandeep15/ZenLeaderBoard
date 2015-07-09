@@ -1,12 +1,10 @@
-angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '$rootScope',
-		function($scope, $meteor, $rootScope){
+angular.module('ZenLeaderBoard').controller('TableCtrl', ['$scope', '$meteor', 
+		function($scope, $meteor){
 			$scope.fields = ["Account ID", "Transaction Code", "Base Currency", "Currency", "Amount", "Time Stamp"];
 			$scope.category = "Account ID";
 			$scope.order = '1';
 			$scope.strOrder = 'Ascending' 
 			$scope.sort = {}; 
-			$scope.page = 1;
-			$scope.perPage = 10;  
 			$scope.transactions = $meteor.collection(function(){
 				return Transactions.find({}, {sort: $scope.getReactively('sort')});
 			});
@@ -84,30 +82,8 @@ angular.module("ZenLeaderBoard").controller("TableCtrl", ['$scope', '$meteor', '
 				}
 			 };
 
-			$scope.formatDate = function(date){
-      			return $scope.UTIL.formatDate(date); 
+			$scope.formatDate = function(thisDate){
+      			return $scope.UTIL.formatDate(thisDate); 
     		}; 
-
-    		$scope.pageChanged = function(newPage){
-    			console.log(newPage);
-    			$scope.page = newPage; 
-    		}; 
-
-//     		$scope.getDistribution = function(){
-//     			  var percentages = [];
-//     			  var currencies = ["CAD", "USD", "HKD", "SGD" , "AUD", "GBP", "EUR", "YEN", "INR"];
-//     			  var currencyMap = {"CAD": "Canadian Dollars", "USD":"US Dollars", "HKD":"Hong Kong Dollars", "SGD":"Singapore Dollars" 
-// , "AUD":"Australian Dollars", "GBP":"British Pounds", "EUR": "Euros", "YEN":"Japanese Yen", "INR":"Indian Rupees"};
-//     		      for (var i =0; i < currencies.length; i++)
-//     		      {
-//     		        var currency = currencies[i];
-//     		        var totalTransactions = Transactions.find().count();
-//     		        console.log(totalTransactions);
-//     		        var currencyCount = Transactions.find({"items.currency":currency}).count(); 
-//     		        var percentage = ((currencyCount/totalTransactions)* 100 ).toFixed(1) + "%";
-//     		        percentages.push({'currency':currencyMap[currency], 'count': currencyCount, 'percentage': percentage});
-//     		      }
-//     		      return percentages; 
-//     		};
 		}
 ]);

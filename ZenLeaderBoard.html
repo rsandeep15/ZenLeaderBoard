@@ -20,11 +20,11 @@
 			function populate()
 			{
 				var dateTime = moment(new Date()).format() + "";
-				var date = dateTime.substring(0, dateTime.indexOf("T"));
-				var time = dateTime.substring(dateTime.indexOf("T")+1, dateTime.indexOf("T") + 9); 
+				var theDate = dateTime.substring(0, dateTime.indexOf("T"));
+				var theTime = dateTime.substring(dateTime.indexOf("T")+1, dateTime.indexOf("T") + 9); 
 				//alert("Using the current date and time: " + dateTime);
-				document.getElementById('myDate').value = date;
-				document.getElementById('myTime').value = time;	
+				document.getElementById('myDate').value = theDate;
+				document.getElementById('myTime').value = theTime;	
 			}
 		</script>
 		<div>

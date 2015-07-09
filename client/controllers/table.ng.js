@@ -1,5 +1,5 @@
-angular.module('ZenLeaderBoard').controller('TableCtrl', ['$scope', '$meteor', 
-		function($scope, $meteor){
+angular.module('ZenLeaderBoard').controller('TableCtrl', ['$scope', '$meteor', '$filter',
+		function($scope, $meteor, $filter){
 			$scope.fields = ["Account ID", "Transaction Code", "Base Currency", "Currency", "Amount", "Time Stamp"];
 			$scope.category = "Account ID";
 			$scope.order = '1';
@@ -52,7 +52,7 @@ angular.module('ZenLeaderBoard').controller('TableCtrl', ['$scope', '$meteor',
 					+ transaction["items"][0]["currency"] + " Amount: " + $scope.fixAmount(transaction["items"][0]["amount"]); 
 
 				}  
-				thisTrans = thisTrans + " Time Stamp: " + $scope.formatDate(transaction["timeStamp"]);
+				thisTrans = thisTrans + " Time Stamp: " + $filter('date')(transaction["timeStamp"], 'medium');
        			var deleted =  confirm("Confirm Delete: \n" + thisTrans);
 				if (deleted)
 				{
@@ -81,9 +81,5 @@ angular.module('ZenLeaderBoard').controller('TableCtrl', ['$scope', '$meteor',
 					}
 				}
 			 };
-
-			$scope.formatDate = function(thisDate){
-      			return $scope.UTIL.formatDate(thisDate); 
-    		}; 
 		}
 ]);

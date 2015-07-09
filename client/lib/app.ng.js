@@ -9,9 +9,6 @@ angular.module('ZenLeaderBoard', ['angular-meteor']).run(function($rootScope){
         	modifiedSort[field] = parseInt(order);
         	return modifiedSort;   
 		},
-		formatDate: function(thisDate){
-			return moment(thisDate).format('MMM Do, YYYY h:mm:ss a'); 
-		},
 		fixAmount: function(amount){
 			var amount = amount + ""; 
 			var index = amount.indexOf("#");

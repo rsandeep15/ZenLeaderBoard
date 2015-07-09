@@ -31,7 +31,7 @@
 			<td>{{transaction.baseCurrency}}</td>
 			<td>{{items(transaction._id, "currency")}}</td>
 			<td>{{fixAmount(items(transaction._id, "amount"))}}</td>
-			<td>{{formatDate(transaction.timeStamp)}}</td>
+			<td>{{transaction.timeStamp | date:'medium'}}</td>
 		</tr>
 	</table>
 </div>

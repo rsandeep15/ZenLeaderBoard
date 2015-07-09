@@ -31,5 +31,6 @@ angular.module('ZenLeaderBoard', ['angular-meteor', 'angularUtils.directives.dir
 			  }
 			}
 		}
+
 	}
 }); 

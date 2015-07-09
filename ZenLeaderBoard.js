@@ -39,6 +39,10 @@ Template.sortBoard.events({
         var amount = form["Amount"].value; 
         var date = form["Date"].value;
         var time = form["Time"].value;
+        if (time.length <= 5)
+        {
+          time = time + ":00";
+        }
         var jsDT = date + "T" + time; 
         var transInfo = [accountID, transactionCode, baseCurrency, currency, amount, date, time]
         

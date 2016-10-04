@@ -2,15 +2,13 @@
 	<title>ZenLeaderBoard</title>
 </head>
 
-<body ng-app='ZenLeaderBoard'>
-	
+<body>
 	<h1>ZenBanx Transactions</h1>
-	<a href = "http://www.zenbanx.com"><img src = "https://pbs.twimg.com/profile_images/598226607082352640/pJ2A1tF9.jpg"></a>
+	<a href="http://www.zenbanx.com"><img src = "https://pbs.twimg.com/profile_images/598226607082352640/pJ2A1tF9.jpg" alt="ZenBanx Logo"></a>
+
 	{{> loginButtons}}
 	{{> sortBoard}}
-<!-- 		<div ng-include="'client/views/stats.ng.html'"></div> -->
 	<div ng-include="'client/views/table.ng.html'"></div>
-
 </body>
 
 <template name = "sortBoard">
@@ -22,16 +20,15 @@
 				var dateTime = moment(new Date()).format() + "";
 				var theDate = dateTime.substring(0, dateTime.indexOf("T"));
 				var theTime = dateTime.substring(dateTime.indexOf("T")+1, dateTime.indexOf("T") + 9); 
-				//alert("Using the current date and time: " + dateTime);
 				document.getElementById('myDate').value = theDate;
 				document.getElementById('myTime').value = theTime;	
 			}
 		</script>
 		<div>
-			<p>Insert New Transaction</p>
+			<p class="addTrans">Insert New Transaction</p>
 			<form name= "transaction" class= "new-transaction" autocomplete= "off">
 				<input type= "text" name= "Account ID" placeholder="Account ID"/>
-				<input type= "text" name= "Transaction Code" placeholder="Transaction Code" required/>
+				<input type= "text" name= "Transaction Code" placeholder="Transaction Code"/>
 				<input list="Currency" type= "id" name= "Base Currency" placeholder="Base Currency" maxlength="3"/>
 				<datalist id="Currency">
 					<option value="USD"></option> 
@@ -45,18 +42,25 @@
 					<option value="GBP"></option> 
 				</datalist>
 				<input list="Currency" type= "text" name= "Currency" placeholder="Currency" maxlength="3"/>
-				<input type= "text" name= "Amount" placeholder="Amount"/>
-				<input type= "date" id="myDate" name= "Date" placeholder="Date" required/>
-				<input type= "time" id="myTime" name= "Time" placeholder="Time" step=1 required/>
+				<input type= "text" name= "Amount" placeholder="Amount" onmouseover="this.focus();"/>
+				<input type= "date" id="myDate" name= "Date" placeholder="Date"/>
+				<input type= "time" id="myTime" name= "Time" placeholder="Time" step='1' />
 				<input type= "button" onclick="populate()" name="Current Date and Time" value="Use Current Date and Time"/>
 				<input type="submit" class= "add" value= "Add Transaction"/>
+				<input type="submit" class= "clear" value = "Clear form"/>
+			</form>
+			<form>
+				<p class="addFile">Upload Transactions File</p>
+				<input type="file" id="fileUploader" name="fileUpload" class="myFileInput" accept=".json" multiple/>
+				<progress id='uploadStatus' value = '0' max = '100'></progress>
 			</form>
 		</div>
 	{{/if}}
 
 	<div>
-		<p>Vital Statistics</p>
-		<table align = "center" style="width:50%">
+		<p class="viewStats">Vital Statistics</p>
+		<div class = "statsTable"> 
+		<table align = "center" style="width:50%" >
 			<tr>
 				<th><b>Currency</b></th>
 				<th><b>Count</b></th> 
@@ -77,6 +81,6 @@
 				<td><h4>100.0%</h4></td> 
 			</tr>
 		</table>
+		</div>
 	</div>	
-
 </template> 

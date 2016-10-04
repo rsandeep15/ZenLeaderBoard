@@ -6,13 +6,15 @@
 
 meteor-platform
 blaze
-momentjs:moment
 accounts-ui
 accounts-password
-accounts-facebook
 urigo:angular
 twbs:bootstrap
 angularutils:pagination
 tmeasday:publish-counts
 email
 digilord:sugarjs
+cfs:standard-packages
+cfs:gridfs
+jquery
+momentjs:moment

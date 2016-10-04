@@ -1,6 +1,6 @@
 <div ng-controller='TableCtrl'>
-		<p> Sort by: </p>
-		<select class= "selector" ng-model="category">
+		<p class='searchSort'> Sort by </p>
+		<select class= "selector" ng-model="category" id='sortField'>
 			<option value="Account ID">Account ID</option>
 			<option value="Transaction Code">Transaction Code</option>
 			<option value="Base Currency">Base Currency</option>
@@ -8,30 +8,30 @@
 			<option value="Amount">Amount</option>
 			<option value="Time Stamp">Time Stamp</option>
 		</select>
-		<select class="selector" ng-model="order">
+		<select class="selector" ng-model="order" id='sortField'>
 			<option value = "1">Ascending</option>
 			<option value = "-1">Descending</option>
 		</select>
-	<p>Live Transactions</p>
-	<input type ="search" ng-model="search" placeholder="Search" id ="searchBox"/>
-	
-	<!--  <input type="file" id="fileUpload" accept=".json"> -->
-<!-- 	Show this if no matched transactions -->
+	<input type ="search" ng-model="search" placeholder="Search" id ="searchBox" onmouseover="this.focus();"/>
+	<p class='viewTransTable'>Live Transactions</p>
 	<p ng-hide="transactions.length" id="NoResults"> No results found for <mark>{{search}}</mark></p>
-
+	<div class='transTable'>
 	<table id="Sorted Table" ng-show="transactions.length">
 		<tr>
 			<th ng-show="$root.currentUser"></th>
-			<th ng-repeat="field in fields">{{field}}</th>
+			<th ng-repeat="field in fields"><b>{{field}}</b></th>
 		</tr>
-		<tr ng-repeat="transaction in transactions">
+		<tr dir-paginate = "transaction in transactions | itemsPerPage: perPage" total-items="transactionCount.count">
 			<td ng-show="$root.currentUser"><button ng-click="remove(transaction)">X</button></td>
-			<td>{{items(transaction._id, "acctId")}}</td>
-			<td>{{items(transaction._id, "tranCode")}}</td> 
+			<td>{{transaction.acctId}}</td>
+			<td>{{transaction.tranCode}}</td> 
 			<td>{{transaction.baseCurrency}}</td>
-			<td>{{items(transaction._id, "currency")}}</td>
-			<td>{{fixAmount(items(transaction._id, "amount"))}}</td>
+			<td>{{transaction.currency}}</td>
+			<td>{{fixAmount(transaction.amount)}}</td>
 			<td>{{transaction.timeStamp | date:'medium'}}</td>
 		</tr>
 	</table>
+		<dir-pagination-controls on-page-change="pageChanged(newPageNumber)" id="page"></dir-pagination-controls> 
+	</div>
+		<input type= "submit" id="removeAll" name="Remove All" value= "removeAll" ng-click="removeAll()" ng-hide="!transactions.length" ng-show="$root.currentUser">
 </div>

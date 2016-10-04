@@ -4,17 +4,24 @@ angular.module('ZenLeaderBoard').controller('TableCtrl', ['$scope', '$meteor', '
 			$scope.category = "Account ID";
 			$scope.order = '1';
 			$scope.strOrder = 'Ascending' 
-			$scope.sort = {}; 
+			$scope.sort = {};
+			$scope.perPage = 100;  
+			$scope.page = 1; 
 			$scope.transactions = $meteor.collection(function(){
 				return Transactions.find({}, {sort: $scope.getReactively('sort')});
 			});
 
 			$meteor.autorun($scope, function()
 			{ 
-				var searchString = $scope.getReactively('search');
-
-				$meteor.subscribe("transactions", {sort: $scope.getReactively('sort')}, $scope.getReactively(
-				'category'), $scope.getReactively('search') ); 
+				// 100 transactions per page, skip to correct page on click, subscribe to relevant Transactions 
+				$meteor.subscribe("transactions", {limit: parseInt($scope.getReactively('perPage')), 
+					skip: parseInt(($scope.getReactively('page') - 1) * $scope.getReactively('perPage')), 
+					sort: $scope.getReactively('sort')}, 
+					$scope.getReactively('category'), 
+					$scope.getReactively('search') ).then(function(){
+					$scope.transactionCount = $meteor.object(Counts, 'numberOfTransactions', false); 
+				}); 
+				console.log("subscribe called");
 			}); 
 
 			$scope.$watch('category', function(){
@@ -45,13 +52,9 @@ angular.module('ZenLeaderBoard').controller('TableCtrl', ['$scope', '$meteor', '
 
 				var thisTrans =   " Base Currency: " 
 				 + transaction["baseCurrency"];
-				if (typeof transaction["items"] != 'undefined')
-				{
-					thisTrans = "Account ID: " + transaction["items"][0]["acctId"] + " Transaction Code: " 
-					+ transaction["items"][0]["tranCode"] + thisTrans +  " Currency: " 
-					+ transaction["items"][0]["currency"] + " Amount: " + $scope.fixAmount(transaction["items"][0]["amount"]); 
-
-				}  
+					thisTrans = "Account ID: " + transaction["acctId"] + " Transaction Code: " 
+					+ transaction["tranCode"] + thisTrans +  " Currency: " 
+					+ transaction["currency"] + " Amount: " + $scope.fixAmount(transaction["amount"]); 
 				thisTrans = thisTrans + " Time Stamp: " + $filter('date')(transaction["timeStamp"], 'medium');
        			var deleted =  confirm("Confirm Delete: \n" + thisTrans);
 				if (deleted)
@@ -59,27 +62,18 @@ angular.module('ZenLeaderBoard').controller('TableCtrl', ['$scope', '$meteor', '
 					$scope.transactions.splice($scope.transactions.indexOf(transaction), 1); 
 				}
 			};
-
+			$scope.removeAll = function(){
+				var ok = confirm("Are you sure you want to remove all transactions?");
+				if (ok == true)
+				{
+					Meteor.call("removeAll");
+				}
+			};
 			$scope.fixAmount = function(amount){
 				return $scope.UTIL.fixAmount(amount); 
 			};
-
-			$scope.items = function(userId, field) {
-				var thisID = "Unknown"; 
-				for (var i =0; i < $scope.transactions.length; i++)
-				{
-					if ($scope.transactions[i]["_id"].valueOf() == userId)
-					{
-						if (typeof $scope.transactions[i]["items"] != 'undefined')
-						{
-							return $scope.transactions[i]["items"][0][field]; 
-						}
-						else
-						{
-							return "Unknown";
-						} 
-					}
-				}
-			 };
+			$scope.pageChanged = function(newPage){
+				$scope.page = newPage; 
+			};
 		}
 ]);

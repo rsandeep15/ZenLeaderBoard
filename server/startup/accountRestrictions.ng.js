@@ -1,1 +1,1 @@
-Accounts.config({sendVerificationEmail: true, forbidClientAccountCreation: true, restrictCreationByEmailDomain: 'zenbanx.com'}); 
+Accounts.config({sendVerificationEmail: true, restrictCreationByEmailDomain: 'zenbanx.com'}); 
